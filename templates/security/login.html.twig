@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<style>
+    @media screen and (max-width: 900px), screen and (max-height: 650px){
+        .form-container{
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+</style>
+
+<div style="bottom: 0; top:0;" class="position-fixed w-100 d-flex justify-content-center align-items-center">
+    <div style="background-color: #505153; width: 50em; height: 35em" class="text-white p-3 form-container">
+        <form method="post" class="d-flex flex-column justify-content-between align-items-stretch h-100 position-relative">
+            <div>
+                <h1 class="h3 font-weight-bold w-100" style="text-align: center">Connexion</h1>
+                <hr style="height: 2px; background-color: white">
+            </div>
+
+            {% if error %}
+                <div class="alert alert-danger position-absolute w-100" style="top: 4.5em">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <div class="px-5">
+                <label for="inputMail">Mail</label>
+                <input type="text" value="{{ last_username }}" name="mail" id="inputMail" class="form-control mb-3" required autofocus>
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
+
+            <div class="d-flex justify-content-center align-items-center">
+                <button class="btn btn-lg btn-danger" type="submit">
+                    Se connecter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

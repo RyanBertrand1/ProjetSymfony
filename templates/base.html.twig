@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <style>
+            {% if app.user %}
+                body{
+                    padding-top: 6em;
+                }
+            {% endif %}
+        </style>
+        {% if app.user %}
+            <div class="w-100 position-fixed d-flex align-items-center justify-content-end px-4 " style="z-index: 100;height: 6em; background-color: #505153; top: 0">
+                <div class="d-flex align-items-center">
+                    <a><img src="{{ asset('/Images/person_white_18dp.png') }}" alt="person" class="mr-4"></a>
+                    <a href="{{ path("app_logout") }}"><img src="{{ asset('/Images/baseline_exit_to_app_white_18dp.png') }}" alt="exit"></a>
+                </div>
+            </div>
+        {% endif %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
