@@ -12,7 +12,7 @@ class TeacherLoan extends Loan
     /**
      * @ORM\Column(type="string")
      */
-    private $usage;
+    private $loanUsage;
 
     /**
      * @ORM\Column(type="string")
@@ -27,17 +27,17 @@ class TeacherLoan extends Loan
     /**
      * @return mixed
      */
-    public function getUsage()
+    public function getLoanUsage()
     {
-        return $this->usage;
+        return $this->loanUsage;
     }
 
     /**
-     * @param mixed $usage
+     * @param mixed $loanUsage
      */
-    public function setUsage($usage): void
+    public function setLoanUsage($loanUsage): void
     {
-        $this->usage = $usage;
+        $this->loanUsage = $loanUsage;
     }
 
     /**

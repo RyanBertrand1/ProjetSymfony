@@ -30,7 +30,7 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $mail;
 
@@ -48,8 +48,6 @@ class User implements UserInterface
      * @ORM\Column(type="array")
      */
     private $roles = [];
-
-
 
     /**
      * @ORM\Column(type="string", nullable=true)

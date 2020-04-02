@@ -99,7 +99,7 @@ class AppFixtures extends Fixture
                 $loan->setStatut("En attente");
                 $loan->setClasses("cours".rand(1,5));
                 $loan->setModule("module".rand(1,5));
-                $loan->setUsage("En cours");
+                $loan->setLoanUsage("En cours");
             }
 
             $manager->persist($loan);

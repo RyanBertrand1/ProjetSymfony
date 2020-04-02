@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register !{% endblock %}
+
+{% block body %}
+    <style>
+        @media screen and (max-width: 750px){
+            .form-container{
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+    </style>
+
+    <div style="bottom: 0; top:0; overflow-y: auto" class="position-fixed w-100 d-flex justify-content-center align-items-center">
+        <div style="background-color: #505153; width: 50em;" class="text-white p-3 form-container">
+            <div class="d-flex flex-column justify-content-between align-items-stretch h-100 position-relative" style="overflow-y: auto">
+                <div>
+                    <h1 class="h3 font-weight-bold w-100" style="text-align: center">Créer un compte</h1>
+                    <hr style="height: 2px; background-color: white">
+                </div>
+
+                {{ form_start(form) }}
+
+                {% if form_errors(form) %}
+                    <div class="alert alert-danger position-absolute w-100" style="top: 4.5em">{{ form_errors(form) }}</div>
+                {% endif %}
+
+                <div class="px-5">
+                    <div class="col">
+                        {{ form_row(form.firstName) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.lastName) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.mail) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.plainPassword) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.type) }}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="btn btn-lg btn-danger" type="submit">
+                        Confirmer
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

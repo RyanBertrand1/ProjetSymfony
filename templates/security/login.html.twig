@@ -34,10 +34,11 @@
             <input type="hidden" name="_csrf_token"
                    value="{{ csrf_token('authenticate') }}">
 
-            <div class="d-flex justify-content-center align-items-center">
-                <button class="btn btn-lg btn-danger" type="submit">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <button class="btn btn-lg btn-danger mb-2" type="submit">
                     Se connecter
                 </button>
+                <a href="{{ path("register") }}">Créer un compte</a>
             </div>
         </form>
     </div>

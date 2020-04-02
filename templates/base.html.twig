@@ -13,9 +13,49 @@
                     padding-top: 6em;
                 }
             {% endif %}
+
+            body{
+                background-color: #eef0f2
+            }
+            .menu-item{
+                margin-right: 2em;
+                cursor: pointer;
+            }
+            .menu-item:hover{
+                color: #DB2D2C;
+                border-bottom: #DB2D2C solid 3px;
+            }
+            .current-item{
+                margin-right: 2em;
+                cursor: pointer;
+                color: #DB2D2C;
+                border-bottom: #DB2D2C solid 3px;
+            }
+            .menu a{
+                text-decoration: none;
+                color: inherit;
+            }
         </style>
         {% if app.user %}
-            <div class="w-100 position-fixed d-flex align-items-center justify-content-end px-4 " style="z-index: 100;height: 6em; background-color: #505153; top: 0">
+            <div class="w-100 position-fixed d-flex align-items-center px-4 {{ is_granted('ROLE_ADMIN') ? "justify-content-between" : "justify-content-end" }}" style="z-index: 100;height: 6em; background-color: #505153; top: 0">
+                {% if is_granted('ROLE_ADMIN') %}
+                    {% set currentPath = path(app.request.attributes.get('_route'),
+                        app.request.attributes.get('_route_params')) %}
+                    <div class="menu d-flex align-items-center justify-content-center text-white font-weight-bold h4">
+                        <div class="{{ currentPath == "/tableau-de-bord" ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("admin_dashboard") }}">Tableau de bord</a>
+                        </div>
+                        <div class="{{ "planning" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("planning") }}">Planning</a>
+                        </div>
+                        <div class="{{ "material" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("material_index") }}">Matériel</a>
+                        </div>
+                        <div class="menu-item">
+                            Utilisateurs
+                        </div>
+                    </div>
+                {%endif%}
                 <div class="d-flex align-items-center">
                     <a><img src="{{ asset('/Images/person_white_18dp.png') }}" alt="person" class="mr-4"></a>
                     <a href="{{ path("app_logout") }}"><img src="{{ asset('/Images/baseline_exit_to_app_white_18dp.png') }}" alt="exit"></a>
