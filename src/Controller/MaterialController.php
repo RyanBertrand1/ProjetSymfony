@@ -68,9 +68,9 @@ class MaterialController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('material_index');
+            $this->getDoctrine()->getManager()->persist($material);
+            $this->getDoctrine()->getManager()->flush();
         }
 
         return $this->render('material/edit.html.twig', [
