@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
     </head>
@@ -37,7 +38,7 @@
             }
         </style>
         {% if app.user %}
-            <div class="w-100 position-fixed d-flex align-items-center px-4 {{ is_granted('ROLE_ADMIN') ? "justify-content-between" : "justify-content-end" }}" style="z-index: 100;height: 4.5em; background-color: #505153; top: 0">
+            <div class="w-100 position-fixed d-flex align-items-center px-4 justify-content-between" style="z-index: 100;height: 4.5em; background-color: #505153; top: 0">
                 {% if is_granted('ROLE_ADMIN') %}
                     {% set currentPath = path(app.request.attributes.get('_route'),
                         app.request.attributes.get('_route_params')) %}
@@ -56,8 +57,19 @@
                         </div>
                     </div>
                 {%endif%}
+                {% if is_granted('ROLE_USER') %}
+                    {% set currentPath = path(app.request.attributes.get('_route'),
+                        app.request.attributes.get('_route_params')) %}
+                    <div class="menu d-flex align-items-center justify-content-center text-white font-weight-bold h4">
+                        <div class="{{ "create_loan" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("create_loan") }}">Nouvelle Demande</a>
+                        </div>
+                        <div class="{{ "my_loans" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("my_loans") }}">Mes Demandes</a>
+                        </div>
+                    </div>
+                {%endif%}
                 <div class="d-flex align-items-center">
-                    <a><img src="{{ asset('/Images/person_white_18dp.png') }}" alt="person" class="mr-4"></a>
                     <a href="{{ path("app_logout") }}"><img src="{{ asset('/Images/baseline_exit_to_app_white_18dp.png') }}" alt="exit"></a>
                 </div>
             </div>
@@ -66,6 +78,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

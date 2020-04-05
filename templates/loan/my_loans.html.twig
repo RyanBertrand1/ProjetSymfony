@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Materiel{% endblock %}
+
+{% block body %}
+    <style>
+        thead th {
+            border-top: none !important;
+        }
+    </style>
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Mes demandes</h4>
+            </div>
+        </div>
+        <div class="card-body p-4" >
+            <table class="table">
+                <thead style="border-top: none">
+                <tr>
+                    <th>Fait le</th>
+                    <th>Date de départ</th>
+                    <th>Date de retour</th>
+                    <th>Matériels</th>
+                    <th>Statut</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for loan in loans %}
+                    <tr>
+                        <td>{{ loan.createdAt|date("d/m/Y") }}</td>
+                        <td>{{ loan.leavingDate|date("d/m/Y") }}</td>
+                        <td>{{ loan.returnDate|date("d/m/Y") }}</td>
+                        <td>
+                            <ul>
+                                {% for material in loan.materials %}
+                                    <li><small class="font-weight-bold">{{material.name}}</small></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ loan.statut }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Il n'y a aucune demande</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

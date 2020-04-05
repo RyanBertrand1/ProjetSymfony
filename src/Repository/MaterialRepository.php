@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Loan;
 use App\Entity\Material;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;

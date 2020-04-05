@@ -15,12 +15,12 @@ class TeacherLoan extends Loan
     private $loanUsage;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $module;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $classes;
 

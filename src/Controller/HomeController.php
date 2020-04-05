@@ -16,6 +16,8 @@ class HomeController extends AbstractController
 
         if($userRole === "ROLE_ADMIN") {
             return $this->redirectToRoute('admin_dashboard');
+        } else if($userRole === "ROLE_USER") {
+            return $this->redirectToRoute('create_loan');
         }
 
         return $this->render('home/index.html.twig', [

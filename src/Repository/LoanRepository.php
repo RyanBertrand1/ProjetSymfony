@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Loan;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -52,6 +53,16 @@ class LoanRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('l')
             ->andWhere('l.statut = :statut')
             ->setParameter('statut', $statut)
+            ->orderBy('l.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLoansByUser(User $user) {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.user', 'u')
+            ->andWhere('u.id LIKE :userId')
+            ->setParameter('userId', $user->getId())
             ->orderBy('l.createdAt', 'DESC')
             ->getQuery()
             ->getResult();

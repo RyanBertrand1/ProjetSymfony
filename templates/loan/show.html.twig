@@ -176,6 +176,7 @@
                         <th>Nom</th>
                         <th>Modele</th>
                         <th>Acheté le</th>
+                        <th>Abimé</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -185,6 +186,13 @@
                             <td>{{ material.name }}</td>
                             <td>{{ material.model }}</td>
                             <td>{{ material.buyedAt|date('d-m-Y') }}</td>
+                            <td>
+                                {% if material.abime %}
+                                    <span class="text-danger">Oui</span>
+                                {% else %}
+                                    <span class="text-success">Non</span>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% else %}
 
