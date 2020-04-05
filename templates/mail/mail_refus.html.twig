@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Refus de demande de prêt</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="mb-2">Votre demande de prêt du {{ loan.createdAt|date('d-m-Y') }} a été refusée pour la raison suivante :</div>
+
+    <div class="mb-4 ml-2" style="white-space: pre-wrap">
+        {{ raison }}
+    </div>
+
+    <div class="mb-1"><strong style="font-size: 110%">Recapitulatif de la demande : </strong></div>
+    <div class="form-row mb-2">
+        <div class="form-row mr-5"><strong class="mr-2">Date de départ : </strong>{{ loan.leavingDate|date(('d-m-Y')) }}</div>
+        <div class="form-row"><strong class="mr-2">Date de retour : </strong>{{ loan.returnDate|date(('d-m-Y')) }}</div>
+    </div>
+
+    <div class="mb-1"><strong>Materiels</strong></div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Numéro</th>
+            <th>Nom</th>
+            <th>Modele</th>
+            <th>Acheté le</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for material in loan.materials %}
+            <tr>
+                <td>{{ material.number }}</td>
+                <td>{{ material.name }}</td>
+                <td>{{ material.model }}</td>
+                <td>{{ material.buyedAt|date('d-m-Y') }}</td>
+            </tr>
+        {% else %}
+
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

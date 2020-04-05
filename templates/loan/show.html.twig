@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande de prêt!{% endblock %}
+
+{% block body %}
+<style>
+    thead th{
+        border-top: none !important;
+    }
+    .form-group{
+        margin: 0!important;
+    }
+</style>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Utilisateur</h4>
+            </div>
+        </div>
+        <div class="card-body p-4" style="max-height: 21em; overflow-y: auto">
+            <div class="d-flex align-items-center justify-content-start mb-4">
+                <div class="d_flex mr-5">
+                    <strong class="mr-2">Nom :</strong>
+                    <span>{{ loan.user.lastName }}</span>
+                </div>
+                <div class="d_flex mr-5">
+                    <strong class="mr-2">Prénom :</strong>
+                    <span>{{ loan.user.firstName }}</span>
+                </div>
+                <div class="d_flex">
+                    <strong class="mr-2">Email :</strong>
+                    <span>{{ loan.user.mail }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-end">
+                {% if loan.user.type is same as("etudiant") %}
+                    <strong style="color: darkred; font-size: 110%">Étudiant</strong>
+                {% else %}
+                    <strong style="color: darkred; font-size: 110%">Enseignant</strong>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Demande de prêt</h4>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#refuserModal">
+                            Refuser
+                        </button>
+                        {{ form_start(traiterForm) }}
+                        {{ form_end(traiterForm) }}
+                        <a class="dropdown-item" href="{{ path("pdf_loan_impr", {'id' : loan.id}) }}" target="_blank">Imprimer</a>
+                        <a class="dropdown-item" href="{{ path("pdf_loan_export", {'id' : loan.id}) }}">Exporter en PDF</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="form-row mb-4">
+                <div class="d_flex  mr-5">
+                    <strong class="mr-2">Fait Le :</strong>
+                    <span>{{ loan.createdAt|date('d-m-Y') }}</span>
+                </div>
+
+                <div class="d_flex  mr-5">
+                    <strong class="mr-2">Date de départ :</strong>
+                    <span>{{ loan.leavingDate|date('d-m-Y') }}</span>
+                </div>
+
+                <div class="d_flex">
+                    <strong class="mr-2">Date de retour :</strong>
+                    <span>{{ loan.returnDate|date('d-m-Y') }}</span>
+                </div>
+            </div>
+
+            {% if loan.user.type is same as("etudiant") %}
+                <div class="form-row mb-4">
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Groupe de tp :</strong>
+                        <span>{{ loan.groupTp }}</span>
+                    </div>
+
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Module :</strong>
+                        <span>{{ loan.module }}</span>
+                    </div>
+
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">cours :</strong>
+                        <span>{{ loan.classes }}</span>
+                    </div>
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Enseignant :</strong>
+                        <span>{{ loan.teacher }}</span>
+                    </div>
+
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Lieu de tournage :</strong>
+                        <span>{{ loan.place }}</span>
+                    </div>
+                </div>
+
+                <div class="form-row mb-4">
+                    <div class="d-flex flex-column mr-5" style="width: 30%">
+                        <strong class="mb-1">Autres étudiants :</strong>
+                        <textarea style="white-space: pre-wrap; height: 7em" disabled>
+                            {{ loan.otherStudents }}
+                        </textarea>
+                    </div>
+
+                    <div class="d-flex flex-column" style="width: 60%">
+                        <strong class="mb-1">Description :</strong>
+                        <textarea style="white-space: pre-wrap; height: 7em" disabled>
+                            {{ loan.description }}
+                        </textarea>
+                    </div>
+                </div>
+
+                {% if loan.specificDemand %}
+                <div class="form-row mb-4">
+                    <div class="d-flex flex-column" style="width: 93.5%">
+                        <strong class="mb-1">Demande spécifique :</strong>
+                        <textarea style="white-space: pre-wrap; height: 7em" disabled>
+                            {{ loan.specificDemand }}
+                        </textarea>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="form-row mb-4">
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Usage :</strong>
+                        <span>{{ loan.loanUsage }}</span>
+                    </div>
+                    {% if loan.usage is same as('En cours') %}
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Module :</strong>
+                        <span>{{ loan.module }}</span>
+                    </div>
+                    <div class="d_flex  mr-5">
+                        <strong class="mr-2">Cours :</strong>
+                        <span>{{ loan.classes }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="form-row justify-content-end">
+                <strong style="color: darkred; font-size: 110%">{{ loan.statut }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Matériels</h4>
+            </div>
+        </div>
+        <div class="card-body p-4" style="max-height: 21em; overflow-y: auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Nom</th>
+                        <th>Modele</th>
+                        <th>Acheté le</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in loan.materials %}
+                        <tr>
+                            <td>{{ material.number }}</td>
+                            <td>{{ material.name }}</td>
+                            <td>{{ material.model }}</td>
+                            <td>{{ material.buyedAt|date('d-m-Y') }}</td>
+                        </tr>
+                    {% else %}
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="refuserModal" tabindex="-1" role="dialog" aria-labelledby="refuserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="refuserModalLabel">Refuser</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{ form_start(refusForm) }}
+                <div class="modal-body">
+                    <div class="col">
+                        {{ form_widget(refusForm) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </div>
+                {{ form_end(refusForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

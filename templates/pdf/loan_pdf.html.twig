@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PDF Demande de prêt{% endblock %}
+
+{% block body %}
+    <style>
+        thead th{
+            border-top: none!important;
+        }
+    </style>
+    <div class="position-fixed " style="z-index: 200; top: 0; bottom: -4.5em; right: 0; left: 0; background-color: white">
+        <h2 class="w-100 text-center">Demande de prêt</h2>
+        <h5 class="font-weight-bold w-100 text-center mb-5" style="color: darkred">{{ loan.statut }}</h5>
+
+        <div style="font-size: 90%">{{ loan.user.firstName }}</div>
+        <div style="font-size: 90%">{{ loan.user.lastName }}</div>
+        <div style="font-size: 90%">{{ loan.user.mail }}</div>
+
+        <div class="font-weight-bold mt-5 mb-2">
+            Demande fait le <span class="font-weight-normal">{{ loan.createdAt|date('d-m-Y') }}</span> pour le materiel suivant :
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Nom</th>
+                <th>Modele</th>
+                <th>Acheté le</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for material in loan.materials %}
+                <tr>
+                    <td>{{ material.number }}</td>
+                    <td>{{ material.name }}</td>
+                    <td>{{ material.model }}</td>
+                    <td>{{ material.buyedAt|date('d-m-Y') }}</td>
+                </tr>
+            {% else %}
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="font-weight-bold mt-5 mb-2">
+            informations Supplementaires :
+        </div>
+
+        {% if loan.user.type is same as("etudiant") %}
+            <div>
+                <div class="mr-2"><strong>Groupe : </strong>{{ loan.groupTp }}</div>
+                <div class="mr-2"><strong>Module : </strong>{{ loan.module }}</div>
+                <div class="mr-2"><strong>Cours : </strong>{{ loan.classes }}</div>
+                <div class="mr-2"><strong>Enseignant : </strong>{{ loan.teacher }}</div>
+                <div class="mr-2"><strong>Lieu de tournage : </strong>{{ loan.place }}</div>
+                <div><strong>Groupe : </strong>{{ loan.groupTp }}</div>
+            </div>
+            <div class="mt-2"><strong>Description : </strong></div>
+            <div style="white-space: pre-wrap">
+                {{ loan.description }}
+            </div>
+
+            {% if loan.specificDemand %}
+                <div class="mt-2"><strong>Demande spécifique : </strong></div>
+                <div style="white-space: pre-wrap">
+                    {{ loan.specificDemand }}
+                </div>
+            {% endif %}
+        {% else %}
+            <div>
+                <div class="mr-2"><strong>Usage : </strong>{{ loan.loanUsage }}</div>
+                {% if loan.loanUsage is same as('En cours') %}
+                <div class="mr-2"><strong>Module : </strong>{{ loan.module }}</div>
+                <div class="mr-2"><strong>Cours : </strong>{{ loan.classes }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

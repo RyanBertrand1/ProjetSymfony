@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block body %}
+    <style>
+        .form-group{
+            margin: 0!important;
+        }
+    </style>
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Utilisateur</h4>
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="card-body p-4" style="max-height: 21em; overflow-y: auto">
+            <div class="d-flex align-items-center justify-content-start mb-4">
+                <div class="d_flex mr-5">
+                    <strong class="mr-2">Nom :</strong>
+                    <span>{{ user.lastName }}</span>
+                </div>
+                <div class="d_flex mr-5">
+                    <strong class="mr-2">Prénom :</strong>
+                    <span>{{ user.firstName }}</span>
+                </div>
+                <div class="d_flex mr-5">
+                    <strong class="mr-2">Email :</strong>
+                    <span>{{ user.mail }}</span>
+                </div>
+                <div class="d_flex">
+                    <strong class="mr-2">Problème signalé :</strong>
+                    {% if user.problem %}
+                    <strong class="text-danger">Oui</strong>
+                    {% else %}
+                        <strong class="text-success">Non</strong>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-end">
+                {% if user.type is same as("etudiant") %}
+                    <strong style="color: darkred; font-size: 110%">Étudiant</strong>
+                {% else %}
+                    <strong style="color: darkred; font-size: 110%">Enseignant</strong>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Demandes de prêt</h4>
+            </div>
+        </div>
+        <div class="card-body" style="max-height: 21em; overflow-y: auto">
+            <table class="table">
+                <thead style="border-top: none">
+                <tr>
+                    <th>Fait le</th>
+                    <th>Date de départ</th>
+                    <th>Date de retour</th>
+                    <th>Matériels</th>
+                    <th>Statut</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for loan in user.loans %}
+                    <tr>
+                        <td>{{ loan.createdAt|date("d/m/Y") }}</td>
+                        <td>{{ loan.leavingDate|date("d/m/Y") }}</td>
+                        <td>{{ loan.returnDate|date("d/m/Y") }}</td>
+                        <td>
+                            <ul>
+                                {% for material in loan.materials %}
+                                    <li><small class="font-weight-bold">{{material.name}}</small></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ loan.statut }}</td>
+                        <td>
+                            <a href="{{ path('loan', {'id': loan.id }) }}"><img src="{{ asset('/Images/eye_black_18dp.png') }}" alt="info" width="25"></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Il n'y a aucune demande de prêt</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

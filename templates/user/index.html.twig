@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+<style>
+    thead th {
+        border-top: none !important;
+    }
+    .form-group{
+        margin: 0!important;
+    }
+    .form-group input{
+        width: 20em;
+    }
+    #form_search_help {
+        margin-left: 1em!important;
+    }
+</style>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Utilisateurs ayant fait une demande</h4>
+                {{ form_start(searchForm) }}
+                    {{ form_widget(searchForm) }}
+                {{ form_end(searchForm) }}
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead style="border-top: none">
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Mail</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr style="color: {{ user.problem ? 'red' : 'black' }}">
+                        <td>{{ user.lastName}}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.mail }}</td>
+                        <td>
+                            <a href="{{ path('user', {'id' : user.id}) }}"><img src="{{ asset('/Images/eye_black_18dp.png') }}" alt="info" width="25"></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun Utilisateur trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
