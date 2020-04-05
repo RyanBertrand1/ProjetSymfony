@@ -47,4 +47,16 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findUserToDisplay($keyword) {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :roles')
+            ->andWhere('CONCAT(u.firstName, \' \', u.lastName) LIKE :keyword OR CONCAT(u.lastName, \' \', u.firstName) LIKE :keyword OR u.mail LIKE :keyword')
+            ->setParameter('roles', '%"'.'ROLE_USER'.'"%')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->addOrderBy('u.lastName', 'ASC')
+            ->addOrderBy('u.firstName', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

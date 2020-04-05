@@ -10,7 +10,7 @@
         <style>
             {% if app.user %}
                 body{
-                    padding-top: 6em;
+                    padding-top: 4.5em;
                 }
             {% endif %}
 
@@ -37,7 +37,7 @@
             }
         </style>
         {% if app.user %}
-            <div class="w-100 position-fixed d-flex align-items-center px-4 {{ is_granted('ROLE_ADMIN') ? "justify-content-between" : "justify-content-end" }}" style="z-index: 100;height: 6em; background-color: #505153; top: 0">
+            <div class="w-100 position-fixed d-flex align-items-center px-4 {{ is_granted('ROLE_ADMIN') ? "justify-content-between" : "justify-content-end" }}" style="z-index: 100;height: 4.5em; background-color: #505153; top: 0">
                 {% if is_granted('ROLE_ADMIN') %}
                     {% set currentPath = path(app.request.attributes.get('_route'),
                         app.request.attributes.get('_route_params')) %}
@@ -48,11 +48,11 @@
                         <div class="{{ "planning" in currentPath ? "current-item" : "menu-item"}}">
                             <a href="{{ path("planning") }}">Planning</a>
                         </div>
-                        <div class="{{ "material" in currentPath ? "current-item" : "menu-item"}}">
-                            <a href="{{ path("material_index") }}">Matériel</a>
+                        <div class="{{ "materiels" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("materials") }}">Matériel</a>
                         </div>
-                        <div class="menu-item">
-                            Utilisateurs
+                        <div class="{{ "utilisateurs" in currentPath ? "current-item" : "menu-item"}}">
+                            <a href="{{ path("users") }}">Utilisateurs</a>
                         </div>
                     </div>
                 {%endif%}
@@ -63,6 +63,9 @@
             </div>
         {% endif %}
         {% block body %}{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

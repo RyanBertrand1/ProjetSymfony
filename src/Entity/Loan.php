@@ -48,6 +48,11 @@ abstract class Loan
     protected $materials;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $specificDemand;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
@@ -111,7 +116,7 @@ abstract class Loan
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getUser()
     {
@@ -145,6 +150,22 @@ abstract class Loan
     public function addMaterial(Material $material) {
         $this->materials->add($material);
         $material->addLoan($this);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecificDemand()
+    {
+        return $this->specificDemand;
+    }
+
+    /**
+     * @param mixed $specificDemand
+     */
+    public function setSpecificDemand($specificDemand): void
+    {
+        $this->specificDemand = $specificDemand;
     }
 
     /**

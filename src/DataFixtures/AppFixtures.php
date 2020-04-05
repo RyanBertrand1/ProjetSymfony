@@ -26,6 +26,7 @@ class AppFixtures extends Fixture
         $materials = new ArrayCollection();
         $users = new ArrayCollection();
 
+        // Material
         for($i=0; $i<11; $i++) {
             $material = new Material();
             $material->setName("materiel".$i);
@@ -45,6 +46,7 @@ class AppFixtures extends Fixture
             $manager->persist($material);
         }
 
+        //User
         for($i=0; $i<11; $i++) {
             $user = new User();
             $user->setRoles(["ROLE_USER"]);
@@ -64,6 +66,17 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $jobUser = new User();
+        $jobUser->setRoles(["JOB_ETUDIANT"]);
+        $jobUser->setFirstName("job_etudiant");
+        $jobUser->setLastName("job_etudiant");
+        $jobUser->setMail("job.etudiant@example.com");
+        $jobUser->setPlainPassword("12345");
+        $this->formAuth->changePassword($jobUser);
+
+        $manager->persist($jobUser);
+
+        //Loan
         for($i=0; $i<21; $i++) {
 
             /**

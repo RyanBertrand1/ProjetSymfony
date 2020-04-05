@@ -9,14 +9,15 @@ use App\Security\AppCustomAuthenticator;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Twig\Environment;
 
 class UserService extends BaseService
 {
     private $appAuth;
 
-    public function __construct(EntityManagerInterface $entityManager, AppCustomAuthenticator $appAuth)
+    public function __construct(EntityManagerInterface $entityManager, Environment $twig, AppCustomAuthenticator $appAuth)
     {
-        parent::__construct($entityManager);
+        parent::__construct($entityManager, $twig);
 
         $this->appAuth = $appAuth;
     }

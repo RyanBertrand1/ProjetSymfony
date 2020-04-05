@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -59,9 +60,19 @@ class User implements UserInterface
      */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Loan", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $loans;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $problem;
+
     public function __construct()
     {
-        //$this->loans = new ArrayCollection();
+        $this->loans = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,6 +176,33 @@ class User implements UserInterface
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+
+    public function getLoans()
+    {
+        return $this->loans;
+    }
+
+    public function setLoans(ArrayCollection $loans): void
+    {
+        $this->loans = $loans;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProblem()
+    {
+        return $this->problem;
+    }
+
+    /**
+     * @param mixed $problem
+     */
+    public function setProblem($problem): void
+    {
+        $this->problem = $problem;
     }
 
     /**

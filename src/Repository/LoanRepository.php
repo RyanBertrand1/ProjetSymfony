@@ -47,4 +47,13 @@ class LoanRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findLoansByStatut($statut) {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.statut = :statut')
+            ->setParameter('statut', $statut)
+            ->orderBy('l.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/material")
+ * @Route("/materiels")
  */
 class MaterialController extends AbstractController
 {
     /**
-     * @Route("/", name="material_index", methods={"GET"})
+     * @Route("/", name="materials", methods={"GET"})
      */
     public function index(MaterialRepository $materialRepository): Response
     {
