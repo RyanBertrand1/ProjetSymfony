@@ -38,7 +38,7 @@
             }
         </style>
         {% if app.user %}
-            <div class="w-100 position-fixed d-flex align-items-center px-4 justify-content-between" style="z-index: 100;height: 4.5em; background-color: #505153; top: 0">
+            <div class="w-100 position-fixed d-flex align-items-center px-4 {{ is_granted('JOB_ETUDIANT') ? "justify-content-end" : "justify-content-between" }}" style="z-index: 100;height: 4.5em; background-color: #505153; top: 0">
                 {% if is_granted('ROLE_ADMIN') %}
                     {% set currentPath = path(app.request.attributes.get('_route'),
                         app.request.attributes.get('_route_params')) %}

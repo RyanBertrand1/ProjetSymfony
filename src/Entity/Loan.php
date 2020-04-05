@@ -68,7 +68,7 @@ abstract class Loan
     }
 
     /**
-     * @return mixed
+     * @return \DateTime|null
      */
     public function getLeavingDate()
     {

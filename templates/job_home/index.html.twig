@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes de prêt{% endblock %}
+
+{% block body %}
+    <style>
+        thead th {
+            border-top: none !important;
+        }
+    </style>
+    <h1 class="w-100 text-center">Demande du jour</h1>
+
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Départ</h4>
+            </div>
+        </div>
+        <div class="card-body p-4" style="max-height: 21em; overflow-y: auto">
+            <table class="table">
+                <thead style="border-top: none">
+                <tr>
+                    <th>Demande de</th>
+                    <th>Fait le</th>
+                    <th>Date de départ</th>
+                    <th>Date de retour</th>
+                    <th>Matériels</th>
+                    <th>Statut</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for loan in loansDepart %}
+                    <tr>
+                        <td>{{ loan.user.firstName }} {{ loan.user.lastName }}</td>
+                        <td>{{ loan.createdAt|date("d/m/Y") }}</td>
+                        <td>{{ loan.leavingDate|date("d/m/Y") }}</td>
+                        <td>{{ loan.returnDate|date("d/m/Y") }}</td>
+                        <td>
+                            <ul>
+                                {% for material in loan.materials %}
+                                    <li><small class="font-weight-bold">{{material.name}}</small></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ loan.statut }}</td>
+                        <td>
+                            <a href="{{ path('loan', {'id': loan.id }) }}"><img src="{{ asset('/Images/eye_black_18dp.png') }}" alt="info" width="25"></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Il n'y a aucune demandes aujourd'hui</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Arrivée</h4>
+            </div>
+        </div>
+        <div class="card-body p-4" style="max-height: 21em; overflow-y: auto">
+            <table class="table">
+                <thead style="border-top: none">
+                <tr>
+                    <th>Demande de</th>
+                    <th>Fait le</th>
+                    <th>Date de départ</th>
+                    <th>Date de retour</th>
+                    <th>Matériels</th>
+                    <th>Statut</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for loan in loansArrive %}
+                    <tr>
+                        <td>{{ loan.user.firstName }} {{ loan.user.lastName }}</td>
+                        <td>{{ loan.createdAt|date("d/m/Y") }}</td>
+                        <td>{{ loan.leavingDate|date("d/m/Y") }}</td>
+                        <td>{{ loan.returnDate|date("d/m/Y") }}</td>
+                        <td>
+                            <ul>
+                                {% for material in loan.materials %}
+                                    <li><small class="font-weight-bold">{{material.name}}</small></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>{{ loan.statut }}</td>
+                        <td>
+                            <a href="{{ path('loan', {'id': loan.id }) }}"><img src="{{ asset('/Images/eye_black_18dp.png') }}" alt="info" width="25"></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Il n'y a aucune demandes aujourd'hui</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

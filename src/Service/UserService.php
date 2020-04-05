@@ -37,4 +37,21 @@ class UserService extends BaseService
 
         return $user;
     }
+
+    public function createJob() {
+        $jobUser = new User();
+        $jobUser->setRoles(["JOB_ETUDIANT"]);
+        $jobUser->setFirstName("job_etudiant");
+        $jobUser->setLastName("job_etudiant");
+        $jobUser->setMail("job.etudiant@example.com");
+        $jobUser->setPlainPassword("12345");
+        $this->appAuth->changePassword($jobUser);
+
+        $jobUser->setRoles(['JOB_ETUDIANT']);
+
+        $this->getEntityManager()->persist($jobUser);
+        $this->getEntityManager()->flush();
+
+        return $jobUser;
+    }
 }
