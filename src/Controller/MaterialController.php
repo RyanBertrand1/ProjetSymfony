@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Material;
 use App\Form\MaterialType;
 use App\Repository\MaterialRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,16 +80,19 @@ class MaterialController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="material_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="material_delete")
      */
-    public function delete(Request $request, Material $material): Response
+    public function delete(Request $request, Material $material, EntityManagerInterface $em)
     {
-        if ($this->isCsrfTokenValid('delete'.$material->getId(), $request->request->get('_token'))) {
+        /*if ($this->isCsrfTokenValid('delete'.$material->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($material);
             $entityManager->flush();
-        }
+        }*/
 
-        return $this->redirectToRoute('material_index');
+        $em->remove($material);
+        $em->flush();
+
+        return $this->redirectToRoute('materials');
     }
 }

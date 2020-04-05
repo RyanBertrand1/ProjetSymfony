@@ -1,47 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Material index{% endblock %}
+{% block title %}Materiels{% endblock %}
 
 {% block body %}
-    <h1>Material index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>BuyedAt</th>
-                <th>Model</th>
-                <th>Number</th>
-                <th>Year1</th>
-                <th>Year2</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for material in materials %}
-            <tr>
-                <td>{{ material.id }}</td>
-                <td>{{ material.name }}</td>
-                <td>{{ material.buyedAt ? material.buyedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ material.model }}</td>
-                <td>{{ material.number }}</td>
-                <td>{{ material.year1 ? 'Yes' : 'No' }}</td>
-                <td>{{ material.year2 ? 'Yes' : 'No' }}</td>
-                <td>{{ material.createdAt ? material.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('material_show', {'id': material.id}) }}">show</a>
-                    <a href="{{ path('material_edit', {'id': material.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('material_new') }}">Create new</a>
+    <style>
+        thead th {
+            border-top: none !important;
+        }
+    </style>
+    <div class="m-5 card" >
+        <div class="card-header">
+            <div class="h-100 w-100 d-flex align-items-center justify-content-between">
+                <h4 class="font-weight-bold text-danger">Materiels</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Modele</th>
+                    <th>Numéro</th>
+                    <th>Acheté le</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for material in materials %}
+                    <tr>
+                        <td>{{ material.name }}</td>
+                        <td>{{ material.model }}</td>
+                        <td>{{ material.number }}</td>
+                        <td>{{ material.buyedAt|date('d-m-Y') }}</td>
+                        <td>
+                            <a href="{{ path('material_edit', {'id': material.id}) }}"><img src="{{ asset('/Images/eye_black_18dp.png') }}" alt="info" width="25"></a>
+                            <a data-toggle="modal" data-target="#modal"><img src="{{ asset('/Images/baseline_delete_black_18dp.png') }}" alt="info" width="25"></a>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Refuser</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Souhaitez-vous supprimer ce Materiel ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                                    <a type="button"  class="btn btn-primary" href="{{ path('material_delete', {'id': material.id}) }}">Oui</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <tr>
+                        <td colspan="9">Aucun materiel trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

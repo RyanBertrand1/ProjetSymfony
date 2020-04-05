@@ -59,6 +59,16 @@ class Material
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $abime;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $note;
+
     public function __construct()
     {
         $this->loans = new ArrayCollection();
@@ -191,6 +201,38 @@ class Material
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAbime()
+    {
+        return $this->abime;
+    }
+
+    /**
+     * @param mixed $abime
+     */
+    public function setAbime($abime): void
+    {
+        $this->abime = $abime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param mixed $note
+     */
+    public function setNote($note): void
+    {
+        $this->note = $note;
     }
 
     /**
